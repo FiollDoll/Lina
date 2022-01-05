@@ -1,5 +1,6 @@
 import sqlite3
 import random
+import time
 conn = sqlite3.connect('Lina.db')
 cur = conn.cursor()
 
@@ -10,23 +11,56 @@ cur.execute("""CREATE TABLE IF NOT EXISTS names(
    gender TEXT);
 """)
 conn.commit() #Сохранение в БД
-cur.execute("""CREATE TABLE IF NOT EXISTS info(
+cur.execute("""CREATE TABLE IF NOT EXISTS answer(
    userID INT,
-   location TEXT,
-   money TEXT);
+   health INT,
+   friend INT,
+   work INT);
 """)
 conn.commit()
 
 userId = random.randint(1, 100)
 def Go():
+    health = 0
+    friend = 0
+    work = 0
     print("Принято. Теперь пара вопросов:")
-    location = input("Где вы живёте:")
-    money = input("Сколько у вас денег:")
-    cur.execute("INSERT INTO info VALUES(?, ?, ?);", ( userId, location, money)) # 3 - аргумента
-    conn.commit()
-    print("Спасибо! Наши специалисты уже выезжают :)")
-    input("Нажмите ENTER")
+    time.sleep(1)
+    print("Вы хорошо себя чувствуете?")
+    print("Да(0), Нет(1), Не могу ответить(2)")
+    answer = input(" ")
+    if answer == "0":
+        health = 0
+    elif answer == "1":
+        health = 1
+    else:
+        health = 2
 
+    time.sleep(1)
+    print("Вы имеете много друзей?")
+    print("Да(0), Нет(1), Не могу ответить(2)")
+    answer1 = input(" ")
+    if answer1 == "0":
+        friend = 0
+    elif answer1 == "1":
+        friend = 1
+    else:
+        friend = 2
+    time.sleep(1)
+
+    print("Вы хорошо учитесь/работаете?")
+    print("Да(0), Нет(1), Не могу ответить(2)")
+    answer2 = input(" ")
+    if answer2 == "0":
+        work = 0
+    elif answer2 == "1":
+        work = 1
+    else:
+        work = 2
+    print("Делаю результат")
+    cur.execute("INSERT INTO answer VALUES(?, ?, ?, ?);", (userId, health, friend, work)) # 3 - аргумента
+    conn.commit()
+    print("-")
 def regist():
     global userId
     name = input("Ваше имя: ")
