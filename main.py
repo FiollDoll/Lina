@@ -60,7 +60,18 @@ def Go():
     print("Делаю результат")
     cur.execute("INSERT INTO answer VALUES(?, ?, ?, ?);", (userId, health, friend, work)) # 3 - аргумента
     conn.commit()
-    print("-")
+    if health == 0 and friend == 0 and work == 0:
+        print("У вас всё хорошо")
+    elif health == 1 and friend == 0 and work == 0:
+        print("У вас всё хорошо, кроме здоровья")
+    elif health == 0 and friend == 1 and work == 0:
+        print("У вас всё хорошо, кроме количества друзей")
+    elif health == 0 and friend == 0 and work == 1:
+        print("У вас всё хорошо, кроме учёбы")
+    elif health == 1 and friend == 1 and work == 1:
+        print("У вас всё плохо")
+    else:
+        print("Всё плохо")
 def regist():
     global userId
     name = input("Ваше имя: ")
